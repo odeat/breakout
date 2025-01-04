@@ -32,7 +32,7 @@ void draw() {
   // updating
   paddleHue += dt * 180;
   paddleHue = paddleHue % 360;
-  
+
   if (keys[37] == true) {
     paddleX -= paddleSnelheid;
   }
@@ -78,8 +78,19 @@ void draw() {
         }
         brick.kapot = true;
         score += 10;
-
-        if (random(1) < 0.2) {
+        boolean allDestroyed = true;
+        for (Brick brick2 : bricks) {
+          if (brick2.kapot == false) {
+            allDestroyed = false;
+            break;
+          }
+        }
+        if (allDestroyed == true) {
+          for (Brick brick2 : bricks) {
+            brick2.kapot = false;
+          }
+        }
+        if (random(1) < 2) {
           balls.add(new Ball(ball.x, ball.y, -ball.velX, -ball.velY));
         }
       }
@@ -146,6 +157,9 @@ String checkCollision2(double x, double y, double xBox, double yBox, double boxW
 boolean[] keys = new boolean[1000];
 void keyPressed() {
   keys[keyCode] = true;
+  if (keyCode == 32 && balls.size() == 0) {
+    balls.add(new Ball(paddleX + paddleWidth / 2, paddleY, random(-200, 200), -500));
+  }
   // println(keyCode);
 }
 
