@@ -1,6 +1,7 @@
 int oldTime = 0; // hi guys im new
 ArrayList<Ball> balls = new ArrayList<Ball>();
 ArrayList<Brick> bricks = new ArrayList<Brick>();
+int score = 0;
 
 int paddleX = 500;
 int paddleY = 800;
@@ -21,7 +22,7 @@ void setup() {
     }
   }
 }
-// commentaar
+
 void draw() {
   int deltaTime = millis() - oldTime;
   float dt = deltaTime / 1000f;
@@ -71,6 +72,7 @@ void draw() {
           ball.velY *= -1;
         }
         brick.kapot = true;
+        score += 10;
         
         if(random(1) < 0.2){
           balls.add(new Ball(ball.x, ball.y, -ball.velX, -ball.velY));
@@ -89,8 +91,12 @@ void draw() {
     i++;
   }
   for (Ball ball : balls) {
+    fill(ball.r, ball.g, ball.b);
     circle(ball.x, ball.y, 50);
   }
+  fill(255, 0, 0);
+  textSize(48);
+  text("SCORE: " + score, 20, 50);  
   rect(paddleX, paddleY, paddleWidth, paddleHeight);
   // println(mouseX, mouseY);
 }
