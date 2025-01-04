@@ -5,10 +5,11 @@ int score = 0;
 
 int paddleX = 500;
 int paddleY = 800;
-int paddleWidth = 200;
+int paddleWidth = 200; 
 int paddleHeight = 40;
 int paddleSnelheid = 10;
 float paddleHue = 0;
+double ballChance = 0.2;
 
 void setup() {
   // randomSeed(0);
@@ -90,7 +91,7 @@ void draw() {
             brick2.kapot = false;
           }
         }
-        if (random(1) < 2) {
+        if (random(1) < ballChance) {
           balls.add(new Ball(ball.x, ball.y, -ball.velX, -ball.velY));
         }
       }
