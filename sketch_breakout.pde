@@ -6,6 +6,7 @@ int paddleX = 500;
 int paddleY = 800;
 int paddleWidth = 200;
 int paddleHeight = 40;
+int paddleSnelheid = 10;
 
 void setup() {
   size(1200, 900);
@@ -27,12 +28,13 @@ void draw() {
   oldTime = millis();
   // updating
   if (keys[37] == true) {
-    paddleX -= 5;
+    paddleX -= paddleSnelheid;
   }
   if (keys[39] == true) {
-    paddleX += 5;
+    paddleX += paddleSnelheid;
   }
-  for (Ball ball : balls) {
+  for (int i=0; i < balls.size(); i++) {
+    Ball ball = balls.get(i);
     ball.x += ball.velX * dt;
     ball.y += ball.velY * dt;
     if (ball.x <= 0) {
@@ -44,6 +46,8 @@ void draw() {
     if (ball.y > height) {
       ball.velY = abs(ball.velY) * -1;
       println("MISS!");
+      balls.remove(i);
+      i--;
     }
     if (ball.y <= 0) {
       ball.velY = abs(ball.velY);
@@ -67,6 +71,10 @@ void draw() {
           ball.velY *= -1;
         }
         brick.kapot = true;
+        
+        if(random(1) < 0.2){
+          balls.add(new Ball(ball.x, ball.y, -ball.velX, -ball.velY));
+        }
       }
     }
   }
