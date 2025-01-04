@@ -8,17 +8,19 @@ int paddleY = 800;
 int paddleWidth = 200;
 int paddleHeight = 40;
 int paddleSnelheid = 10;
+float paddleHue = 0;
 
 void setup() {
+  // randomSeed(0);
   size(1200, 900);
   balls.add(new Ball(600, 750, -100, -800));
   //bricks.add(new Brick(100, 100, 250, 80));
   //bricks.add(new Brick(450, 300, 250, 80));
   //bricks.add(new Brick(800, 100, 250, 80));
-
-  for (int x=0; x <= 10; x++) {
-    for (int y=0; y <= 5; y++) {
-      bricks.add(new Brick(100 + x * 100, 100 + y * 100, 90, 80));
+  colorMode(HSB, 360, 100, 100);
+  for (int x=0; x < 10; x++) {
+    for (int y=0; y < 5; y++) {
+      bricks.add(new Brick(100 + x * 100, 100 + y * 100, 80, 80));
     }
   }
 }
@@ -28,6 +30,9 @@ void draw() {
   float dt = deltaTime / 1000f;
   oldTime = millis();
   // updating
+  paddleHue += dt * 180;
+  paddleHue = paddleHue % 360;
+  
   if (keys[37] == true) {
     paddleX -= paddleSnelheid;
   }
@@ -73,8 +78,8 @@ void draw() {
         }
         brick.kapot = true;
         score += 10;
-        
-        if(random(1) < 0.2){
+
+        if (random(1) < 0.2) {
           balls.add(new Ball(ball.x, ball.y, -ball.velX, -ball.velY));
         }
       }
@@ -86,6 +91,7 @@ void draw() {
   while (i < bricks.size()) {
     Brick brick = bricks.get(i);
     if (brick.kapot == false) {
+      fill(brick.r, brick.g, brick.b);
       rect(brick.x, brick.y, brick.breedte, brick.hoogte);
     }
     i++;
@@ -94,9 +100,10 @@ void draw() {
     fill(ball.r, ball.g, ball.b);
     circle(ball.x, ball.y, 50);
   }
-  fill(255, 0, 0);
+  fill(255, 100, 100);
   textSize(48);
-  text("SCORE: " + score, 20, 50);  
+  text("SCORE: " + score, 20, 50);
+  fill(paddleHue, 100, 100);
   rect(paddleX, paddleY, paddleWidth, paddleHeight);
   // println(mouseX, mouseY);
 }
