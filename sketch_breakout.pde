@@ -1,4 +1,4 @@
-int oldTime = 0;
+int oldTime = 0; // hi guys im new
 ArrayList<Ball> balls = new ArrayList<Ball>();
 ArrayList<Brick> bricks = new ArrayList<Brick>();
 
